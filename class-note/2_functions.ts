@@ -13,3 +13,7 @@ function add(): number {
 function newSum(a: number, b: number): number {
   return a + b;
 }
+
+// 지정한 인자보다 많이 넣을 경우 ts에서 경고 문구
+// 지정한 타입과 다른 인자를 넣을 경우 ts 에서 경고
+sum(10, 20);
