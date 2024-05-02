@@ -49,6 +49,20 @@ let obj: StringRegexDictionary = {
   jsFile: /\.js$/,
 }
 
-Object.keys(obj).forEach(function(value) {
+Object.keys(obj).forEach(function(value) {})
 
-})
+// 인터페이스 확장(상속)
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Developer extends Person {
+  language: string;
+}
+
+let josh: Developer = {
+  language: 'ts',
+  age: 100,
+  name: '조쉬'
+}
