@@ -18,3 +18,20 @@ function logMessage1(value: string | number) {
 }
 logMessage1("hello");
 logMessage1(100);
+
+interface Developer {
+  name: string;
+  skill: string;
+}
+
+interface Person {
+  name: string;
+  age: number;
+}
+
+function askSomeone(someone: Developer | Person) {
+  someone.name;
+  // someone.skill; 'Developer | Person' 형식에 'skill' 속성이 없습니다. 'Person' 형식에 'skill' 속성이 없습니다.ts(2339)
+  // someone.age; 'Developer | Person' 형식에 'age' 속성이 없습니다. 'Developer' 형식에 'age' 속성이 없습니다.ts(2339
+  // 유니온 타입으로 선언 하더라도 중복되는 값이 아니면 속성을 찾지 못함.
+}
