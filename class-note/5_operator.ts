@@ -36,7 +36,7 @@ function askSomeone(someone: Developer | Person) {
   // 유니온 타입으로 선언 하더라도 중복되는 값이 아니면 속성을 찾지 못함.
 }
 
-let capt: string & number & boolean; // 스트링, 넘버, 불린 값을 다 만족 하는 값이라 capt 은 never 값이 온다. 인터섹션 타입
+let capt: string & number & boolean; // 스트링, 넘버, 불린 값을 다 만족 하는 값이라 capt 은 never 값이 온다.
 
 function askSomeone1(someone: Developer & Person) {
   someone.name;
@@ -44,3 +44,10 @@ function askSomeone1(someone: Developer & Person) {
   someone.age;
   // Developer 와 person 의 모든 값이 다 포함된 타입 값임
 }
+
+askSomeone({ name: "디벨로퍼", skill: "웹 개발" });
+askSomeone({ name: "캡틴", age: 100 });
+// 인자가 developer 나 person 값을 넣어도 만족 함
+
+askSomeone1({ name: "헐크", skill: "변신", age: 100 });
+// 인자가 developer 와 person 값을 모두 넣어야 만족함
