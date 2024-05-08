@@ -35,3 +35,12 @@ function askSomeone(someone: Developer | Person) {
   // someone.age; 'Developer | Person' 형식에 'age' 속성이 없습니다. 'Developer' 형식에 'age' 속성이 없습니다.ts(2339
   // 유니온 타입으로 선언 하더라도 중복되는 값이 아니면 속성을 찾지 못함.
 }
+
+let capt: string & number & boolean; // 스트링, 넘버, 불린 값을 다 만족 하는 값이라 capt 은 never 값이 온다. 인터섹션 타입
+
+function askSomeone1(someone: Developer & Person) {
+  someone.name;
+  someone.skill;
+  someone.age;
+  // Developer 와 person 의 모든 값이 다 포함된 타입 값임
+}
