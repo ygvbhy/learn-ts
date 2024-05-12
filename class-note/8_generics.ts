@@ -32,3 +32,14 @@ function logText1(text: string | number) {
 const a = logText1("a");
 // 유니온 타입으로 문자열과 숫자의 타입을 받을 수 있어졌으나 반환값에 대한 타입 설정이 잘못되어 있으므로 문제가 생김
 logText1(10);
+
+function logText2<T>(text: T): T {
+  console.log(text);
+  return text;
+}
+
+const str = logText2<string>("abc");
+str.split("");
+const login = logText2<boolean>(true);
+
+logText2(10);
