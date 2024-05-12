@@ -43,3 +43,20 @@ str.split("");
 const login = logText2<boolean>(true);
 
 logText2(10);
+
+// 인터페이스에 제네릭 선언 방법
+// 일반적인 선언
+interface Dropdown {
+  value: string;
+  selected: boolean;
+}
+
+const obj: Dropdown = { value: "abc", selected: false };
+
+// 제네릭 선언 방법
+interface Dropdown1<T> {
+  value: T;
+  selected: boolean;
+}
+
+const obj1: Dropdown1<string> = { value: "", selected: false };
