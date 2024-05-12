@@ -68,3 +68,16 @@ function logTextLength<T>(text: T[]): T[] {
 }
 
 logTextLength(["hi"]);
+
+// 제네릭 타입 제한 2 - 정의된 타입 이용하기
+interface LengthType {
+  length: number;
+}
+
+function logTextLength1<T extends LengthType>(text: T): T {
+  text.length;
+  return text;
+}
+logTextLength1("a");
+logTextLength1(10); // number 에는 length 가 제공되지 않음
+logTextLength1({ length: 10 }); // length 라는 객체가 있으면 지원 함. 하지만 철자가 달라진다면 바로 지원 하지 않는다고 함
