@@ -60,3 +60,11 @@ interface Dropdown1<T> {
 }
 
 const obj1: Dropdown1<string> = { value: "", selected: false };
+
+// 제네릭 타입 제한
+// 제네릭에 대한 타입의 힌트를 제공 하는 것임
+function logTextLength<T>(text: T[]): T[] {
+  return text;
+}
+
+logTextLength(["hi"]);
