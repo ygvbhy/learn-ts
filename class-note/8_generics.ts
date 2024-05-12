@@ -79,5 +79,23 @@ function logTextLength1<T extends LengthType>(text: T): T {
   return text;
 }
 logTextLength1("a");
-logTextLength1(10); // number 에는 length 가 제공되지 않음
+// logTextLength1(10); // number 에는 length 가 제공되지 않음
 logTextLength1({ length: 10 }); // length 라는 객체가 있으면 지원 함. 하지만 철자가 달라진다면 바로 지원 하지 않는다고 함
+
+// 제네릭 타입 제한 3 - keyof
+interface ShoppingItem {
+  name: string;
+  price: number;
+  stock: number;
+}
+
+function getShoppingItemOption<T extends keyof ShoppingItem>(itemOption: T): T {
+  return itemOption;
+}
+
+// getShoppingItemOption(10);
+// getShoppingItemOption("a");
+getShoppingItemOption("name");
+getShoppingItemOption("stock");
+getShoppingItemOption("price");
+// 이미 정의된 타입에서 '키' 값만 받을 수 있음
