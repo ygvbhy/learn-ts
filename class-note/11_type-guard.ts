@@ -26,3 +26,18 @@ if ((tony as Developer).skill) {
   let age = (tony as Person).age;
   console.log(age);
 }
+
+// 타입 가드 정의
+// Developer 에 대한 타입 정의
+// 반환 타입의 is 가 핵심 문법임
+function isDeveloper(target: Developer | Person): target is Developer {
+  return (target as Developer).skill !== undefined;
+}
+
+// 위의 함수를 통과 했다면 Developer 이므로 타입 추론
+// 통과 못했다면 Person 의 타입 이므로 age 접근 가능
+if (isDeveloper(tony)) {
+  console.log(tony.skill);
+} else {
+  console.log(tony.age);
+}
