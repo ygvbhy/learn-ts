@@ -59,12 +59,16 @@ class AddressBook {
   // TODO: 아래 변수의 타입을 지정해보세요.
   contacts: Contact[] = [];
 
+  // constructor 는 기본적으로 타입이 선언되지 않는다.
   constructor() {
     this.fetchData();
   }
 
-  fetchData() {
-    fetchContacts().then((response: Contact[]) => {
+  fetchData(): void {
+    // 기본적으로 response 의 타입이 정해져 있기 때문에 선언할 필요는 없지만 해도 됨
+    // 아래의 주석은 프리티어 관련 오류로 선언 해둔거
+    // eslint-disable-next-line prettier/prettier
+    fetchContacts().then((response) => {
       this.contacts = response;
     });
   }
