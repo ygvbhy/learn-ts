@@ -74,31 +74,32 @@ class AddressBook {
   }
 
   /* TODO: 아래 함수들의 파라미터 타입과 반환 타입을 지정해보세요 */
-  findContactByName(name: string) {
+  // 반환 타입 선언을 하지 않았지만 이미 Contact[] 의 타입을 정해뒀기 떄문에 해당 값으로 반환 값이 정해짐
+  findContactByName(name: string): Contact[] {
     return this.contacts.filter((contact: Contact) => contact.name === name);
   }
 
-  findContactByAddress(address: string) {
+  findContactByAddress(address: string): Contact[] {
     return this.contacts.filter(
       (contact: Contact) => contact.address === address
     );
   }
 
-  findContactByPhone(phoneNumber: number, phoneType: string) {
+  findContactByPhone(phoneNumber: number, phoneType: string): Contact[] {
     return this.contacts.filter(
       (contact: Contact) => contact.phones[phoneType].num === phoneNumber
     );
   }
 
-  addContact(contact: Contact) {
+  addContact(contact: Contact): void {
     this.contacts.push(contact);
   }
 
-  displayListByName() {
+  displayListByName(): string[] {
     return this.contacts.map((contact: Contact) => contact.name);
   }
 
-  displayListByAddress() {
+  displayListByAddress(): string[] {
     return this.contacts.map((contact: Contact) => contact.address);
   }
   /* ------------------------------------------------ */
