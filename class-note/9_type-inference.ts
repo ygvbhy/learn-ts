@@ -48,3 +48,9 @@ let detailedItem: DetailedDripdown<string> = {
   value: "a",
   tag: "a",
 };
+
+// Best Common Type
+// 어떤식으로 해석하는지에 대한 방식 ? 으로 이해 하면 편할듯 ?
+// 가장 근접한 타입으로 유추 하는데 그냥 유니온 타입으로 엮어 가는 거임
+// let arr: (string | number | boolean)[]
+let arr = [1, 2, true, true, "a"];
