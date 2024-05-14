@@ -104,6 +104,7 @@ class AddressBook {
   }
 
   displayListByName(): string[] {
+    // 아래의 예제를 보면 name 값을 배열로 반환 해줌
     return this.contacts.map((contact: Contact) => contact.name);
   }
 
@@ -112,5 +113,14 @@ class AddressBook {
   }
   /* ------------------------------------------------ */
 }
+
+// map 구동 예시
+let heroes = [
+  { name: "Tony", age: 30 },
+  { name: "Captain", age: 100 },
+];
+heroes.map(function (hero) {
+  return hero.name;
+}); // ['Tony', 'Captain']
 
 new AddressBook();
