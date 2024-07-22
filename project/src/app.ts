@@ -1,5 +1,5 @@
 // utils
-function $(selector: string) {
+function $(selector: string): HTMLParagraphElement {
   return document.querySelector(selector);
 }
 function getUnixTimestamp(date: Date) {
