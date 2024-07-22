@@ -34,7 +34,7 @@ function createSpinnerElement(id: string) {
 
 // state
 let isDeathLoading = false;
-let isRecoveredLoading = false;
+const isRecoveredLoading = false;
 
 // api
 function fetchCovidSummary() {
@@ -49,9 +49,8 @@ enum CovidStatus {
 }
 
 /**
- * 
  * @param {'spain' | 'switzerland'} countryCode 스페인과 스위스만 지원됩니다.
- * @returns 
+ * @returns
  */
 function fetchCountryInfo(countryCode: string, status: CovidStatus) {
   // status params: confirmed, recovered, deaths
@@ -89,7 +88,7 @@ async function handleListClick(event: any) {
   startLoadingAnimation();
   isDeathLoading = true;
 
-  console.log({selectedId});
+  console.log({ selectedId });
 
   /**
    * NOTE: 코로나 종식으로 오픈 API 지원이 끝나서 death, recover 데이터는 지원되지 않습니다.
@@ -186,7 +185,7 @@ async function setupData() {
 }
 
 function renderChart(data: any, labels: any) {
-  var ctx = $('#lineChart').getContext('2d');
+  const ctx = $('#lineChart').getContext('2d');
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -208,7 +207,9 @@ function setChartData(data: any) {
   const chartData = data.slice(-14).map((value: any) => value.Cases);
   const chartLabel = data
     .slice(-14)
-    .map((value: any) => new Date(value.Date).toLocaleDateString().slice(5, -1));
+    .map((value: any) =>
+      new Date(value.Date).toLocaleDateString().slice(5, -1),
+    );
   renderChart(chartData, chartLabel);
 }
 
