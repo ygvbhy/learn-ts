@@ -42,13 +42,19 @@ function fetchCovidSummary() {
   return axios.get(url);
 }
 
+enum CovidStatus {
+  Confirmed = 'confirmed',
+  Recovered = 'recovered',
+  Deaths = 'deaths',
+}
+
 /**
  * 
  * @param {'spain' | 'switzerland'} countryCode 스페인과 스위스만 지원됩니다.
  * @returns 
  */
-function fetchCountryInfo(countryCode: any, status: any) {
-  // params: confirmed, recovered, deaths
+function fetchCountryInfo(countryCode: string, status: CovidStatus) {
+  // status params: confirmed, recovered, deaths
   const url = `https://ts-covid-api.vercel.app/api/country/${countryCode}`;
   return axios.get(url);
 }
