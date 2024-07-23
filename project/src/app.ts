@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 // utils
 function $(selector: string): HTMLParagraphElement {
   return document.querySelector(selector);
