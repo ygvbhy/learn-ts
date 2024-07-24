@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import * as Chart from 'chart.js';
+// 타입 모듈
+import { CovidSummaryResponse, CovidStatus } from './covid/index';
 
 // utils
 function $(selector: string): HTMLParagraphElement {
@@ -39,22 +41,10 @@ function createSpinnerElement(id: string) {
 let isDeathLoading = false;
 const isRecoveredLoading = false;
 
-interface CovidSummaryResponse {
-  Countries: any[];
-  Date: string;
-  Global: object;
-}
-
 // api
 function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
   const url = 'https://ts-covid-api.vercel.app/api/summary';
   return axios.get(url);
-}
-
-enum CovidStatus {
-  Confirmed = 'confirmed',
-  Recovered = 'recovered',
-  Deaths = 'deaths',
 }
 
 /**
@@ -63,6 +53,8 @@ enum CovidStatus {
  */
 function fetchCountryInfo(countryCode: string, status: CovidStatus) {
   // status params: confirmed, recovered, deaths
+  console.log(status);
+
   const url = `https://ts-covid-api.vercel.app/api/country/${countryCode}`;
   return axios.get(url);
 }
