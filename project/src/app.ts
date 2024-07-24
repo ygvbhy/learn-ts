@@ -46,7 +46,7 @@ interface CovidSummaryResponse {
 }
 
 // api
-function fetchCovidSummary(): AxiosResponse<CovidSummaryResponse> {
+function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
   const url = 'https://ts-covid-api.vercel.app/api/summary';
   return axios.get(url);
 }
