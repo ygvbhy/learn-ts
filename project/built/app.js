@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,13 +35,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+var axios_1 = require("axios");
+var Chart = require("chart.js");
+// 타입 모듈
+var index_1 = require("./covid/index");
 // utils
 function $(selector) {
     return document.querySelector(selector);
 }
-function getUnixTimestamp(date) {
-    return new Date(date).getTime();
-}
+// function getUnixTimestamp(date: Date | string) {
+//   return new Date(date).getTime();
+// }
 // DOM
 var confirmedTotal = $('.confirmed-total');
 var deathsTotal = $('.deaths');
@@ -64,21 +70,21 @@ function createSpinnerElement(id) {
 }
 // state
 var isDeathLoading = false;
-var isRecoveredLoading = false;
+// const isRecoveredLoading = false;
 // api
 function fetchCovidSummary() {
     var url = 'https://ts-covid-api.vercel.app/api/summary';
-    return axios.get(url);
+    return axios_1.default.get(url);
 }
 /**
- *
  * @param {'spain' | 'switzerland'} countryCode 스페인과 스위스만 지원됩니다.
  * @returns
  */
 function fetchCountryInfo(countryCode, status) {
-    // params: confirmed, recovered, deaths
+    // status params: confirmed, recovered, deaths
+    console.log(status); // 사용안하므로 우선 log 로 선언
     var url = "https://ts-covid-api.vercel.app/api/country/".concat(countryCode);
-    return axios.get(url);
+    return axios_1.default.get(url);
 }
 // methods
 function startApp() {
@@ -110,7 +116,7 @@ function handleListClick(event) {
                     startLoadingAnimation();
                     isDeathLoading = true;
                     console.log({ selectedId: selectedId });
-                    return [4 /*yield*/, fetchCountryInfo(selectedId, 'confirmed')];
+                    return [4 /*yield*/, fetchCountryInfo(selectedId, index_1.CovidStatus.Confirmed)];
                 case 1:
                     confirmedResponse = (_a.sent()).data;
                     endLoadingAnimation();
@@ -126,48 +132,54 @@ function handleListClick(event) {
         });
     });
 }
-function setDeathsList(data) {
-    var sorted = data.sort(function (a, b) { return getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date); });
-    sorted.forEach(function (value) {
-        var li = document.createElement('li');
-        li.setAttribute('class', 'list-item-b flex align-center');
-        var span = document.createElement('span');
-        span.textContent = value.Cases;
-        span.setAttribute('class', 'deaths');
-        var p = document.createElement('p');
-        p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
-        li.appendChild(span);
-        li.appendChild(p);
-        deathsList.appendChild(li);
-    });
-}
+// function setDeathsList(data: CountrySummeryInfo) {
+//   const sorted = data.sort(
+//     (a: CountrySummeryResponse, b: CountrySummeryResponse) =>
+//       getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
+//   );
+//   sorted.forEach((value: CountrySummeryResponse) => {
+//     const li = document.createElement('li');
+//     li.setAttribute('class', 'list-item-b flex align-center');
+//     const span = document.createElement('span');
+//     span.textContent = value.Cases.toString();
+//     span.setAttribute('class', 'deaths');
+//     const p = document.createElement('p');
+//     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
+//     li.appendChild(span);
+//     li.appendChild(p);
+//     deathsList.appendChild(li);
+//   });
+// }
 function clearDeathList() {
     deathsList.innerHTML = null;
 }
-function setTotalDeathsByCountry(data) {
-    deathsTotal.innerText = data[0].Cases;
-}
-function setRecoveredList(data) {
-    var sorted = data.sort(function (a, b) { return getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date); });
-    sorted.forEach(function (value) {
-        var li = document.createElement('li');
-        li.setAttribute('class', 'list-item-b flex align-center');
-        var span = document.createElement('span');
-        span.textContent = value.Cases;
-        span.setAttribute('class', 'recovered');
-        var p = document.createElement('p');
-        p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
-        li.appendChild(span);
-        li.appendChild(p);
-        recoveredList.appendChild(li);
-    });
-}
+// function setTotalDeathsByCountry(data: CountrySummeryInfo) {
+//   deathsTotal.innerText = data[0].Cases.toString();
+// }
+// function setRecoveredList(data: CountrySummeryInfo) {
+//   const sorted = data.sort(
+//     (a: CountrySummeryResponse, b: CountrySummeryResponse) =>
+//       getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
+//   );
+//   sorted.forEach((value: CountrySummeryResponse) => {
+//     const li = document.createElement('li');
+//     li.setAttribute('class', 'list-item-b flex align-center');
+//     const span = document.createElement('span');
+//     span.textContent = value.Cases.toString();
+//     span.setAttribute('class', 'recovered');
+//     const p = document.createElement('p');
+//     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
+//     li.appendChild(span);
+//     li.appendChild(p);
+//     recoveredList.appendChild(li);
+//   });
+// }
 function clearRecoveredList() {
     recoveredList.innerHTML = null;
 }
-function setTotalRecoveredByCountry(data) {
-    recoveredTotal.innerText = data[0].Cases;
-}
+// function setTotalRecoveredByCountry(data: CountrySummeryInfo) {
+//   recoveredTotal.innerText = data[0].Cases.toString();
+// }
 function startLoadingAnimation() {
     deathsList.appendChild(deathSpinner);
     recoveredList.appendChild(recoveredSpinner);
@@ -195,7 +207,8 @@ function setupData() {
     });
 }
 function renderChart(data, labels) {
-    var ctx = $('#lineChart').getContext('2d');
+    var lineChart = $('#lineChart');
+    var ctx = lineChart.getContext('2d');
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -213,20 +226,24 @@ function renderChart(data, labels) {
     });
 }
 function setChartData(data) {
-    var chartData = data.slice(-14).map(function (value) { return value.Cases; });
+    var chartData = data
+        .slice(-14)
+        .map(function (value) { return value.Cases; });
     var chartLabel = data
         .slice(-14)
-        .map(function (value) { return new Date(value.Date).toLocaleDateString().slice(5, -1); });
+        .map(function (value) {
+        return new Date(value.Date).toLocaleDateString().slice(5, -1);
+    });
     renderChart(chartData, chartLabel);
 }
 function setTotalConfirmedNumber(data) {
-    confirmedTotal.innerText = data.Countries.reduce(function (total, current) { return (total += current.TotalConfirmed); }, 0);
+    confirmedTotal.innerText = data.Countries.reduce(function (total, current) { return (total += current.TotalConfirmed); }, 0).toString();
 }
 function setTotalDeathsByWorld(data) {
-    deathsTotal.innerText = data.Countries.reduce(function (total, current) { return (total += current.TotalDeaths); }, 0);
+    deathsTotal.innerText = data.Countries.reduce(function (total, current) { return (total += current.TotalDeaths); }, 0).toString();
 }
 function setTotalRecoveredByWorld(data) {
-    recoveredTotal.innerText = data.Countries.reduce(function (total, current) { return (total += current.TotalRecovered); }, 0);
+    recoveredTotal.innerText = data.Countries.reduce(function (total, current) { return (total += current.TotalRecovered); }, 0).toString();
 }
 function setCountryRanksByConfirmedCases(data) {
     var sorted = data.Countries.sort(function (a, b) { return b.TotalConfirmed - a.TotalConfirmed; });
@@ -235,7 +252,7 @@ function setCountryRanksByConfirmedCases(data) {
         li.setAttribute('class', 'list-item flex align-center');
         li.setAttribute('id', value.Slug);
         var span = document.createElement('span');
-        span.textContent = value.TotalConfirmed;
+        span.textContent = value.TotalConfirmed.toString();
         span.setAttribute('class', 'cases');
         var p = document.createElement('p');
         p.setAttribute('class', 'country');

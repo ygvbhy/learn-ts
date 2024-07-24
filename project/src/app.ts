@@ -10,19 +10,19 @@ import {
 } from './covid/index';
 
 // utils
-function $(selector: string): HTMLParagraphElement {
+function $(selector: string) {
   return document.querySelector(selector);
 }
-function getUnixTimestamp(date: Date | string) {
-  return new Date(date).getTime();
-}
+// function getUnixTimestamp(date: Date | string) {
+//   return new Date(date).getTime();
+// }
 
 // DOM
-const confirmedTotal = $('.confirmed-total');
-const deathsTotal = $('.deaths');
-const recoveredTotal = $('.recovered');
-const lastUpdatedTime = $('.last-updated-time');
-const rankList = $('.rank-list');
+const confirmedTotal = $('.confirmed-total') as HTMLParagraphElement;
+const deathsTotal = $('.deaths') as HTMLParagraphElement;
+const recoveredTotal = $('.recovered') as HTMLParagraphElement;
+const lastUpdatedTime = $('.last-updated-time') as HTMLParagraphElement;
+const rankList = $('.rank-list') as HTMLParagraphElement;
 const deathsList = $('.deaths-list');
 const recoveredList = $('.recovered-list');
 const deathSpinner = createSpinnerElement('deaths-spinner');
@@ -123,59 +123,59 @@ async function handleListClick(event: MouseEvent) {
   isDeathLoading = false;
 }
 
-function setDeathsList(data: CountrySummeryInfo) {
-  const sorted = data.sort(
-    (a: CountrySummeryResponse, b: CountrySummeryResponse) =>
-      getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
-  );
-  sorted.forEach((value: CountrySummeryResponse) => {
-    const li = document.createElement('li');
-    li.setAttribute('class', 'list-item-b flex align-center');
-    const span = document.createElement('span');
-    span.textContent = value.Cases.toString();
-    span.setAttribute('class', 'deaths');
-    const p = document.createElement('p');
-    p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
-    li.appendChild(span);
-    li.appendChild(p);
-    deathsList.appendChild(li);
-  });
-}
+// function setDeathsList(data: CountrySummeryInfo) {
+//   const sorted = data.sort(
+//     (a: CountrySummeryResponse, b: CountrySummeryResponse) =>
+//       getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
+//   );
+//   sorted.forEach((value: CountrySummeryResponse) => {
+//     const li = document.createElement('li');
+//     li.setAttribute('class', 'list-item-b flex align-center');
+//     const span = document.createElement('span');
+//     span.textContent = value.Cases.toString();
+//     span.setAttribute('class', 'deaths');
+//     const p = document.createElement('p');
+//     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
+//     li.appendChild(span);
+//     li.appendChild(p);
+//     deathsList.appendChild(li);
+//   });
+// }
 
 function clearDeathList() {
   deathsList.innerHTML = null;
 }
 
-function setTotalDeathsByCountry(data: CountrySummeryInfo) {
-  deathsTotal.innerText = data[0].Cases.toString();
-}
+// function setTotalDeathsByCountry(data: CountrySummeryInfo) {
+//   deathsTotal.innerText = data[0].Cases.toString();
+// }
 
-function setRecoveredList(data: CountrySummeryInfo) {
-  const sorted = data.sort(
-    (a: CountrySummeryResponse, b: CountrySummeryResponse) =>
-      getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
-  );
-  sorted.forEach((value: CountrySummeryResponse) => {
-    const li = document.createElement('li');
-    li.setAttribute('class', 'list-item-b flex align-center');
-    const span = document.createElement('span');
-    span.textContent = value.Cases.toString();
-    span.setAttribute('class', 'recovered');
-    const p = document.createElement('p');
-    p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
-    li.appendChild(span);
-    li.appendChild(p);
-    recoveredList.appendChild(li);
-  });
-}
+// function setRecoveredList(data: CountrySummeryInfo) {
+//   const sorted = data.sort(
+//     (a: CountrySummeryResponse, b: CountrySummeryResponse) =>
+//       getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
+//   );
+//   sorted.forEach((value: CountrySummeryResponse) => {
+//     const li = document.createElement('li');
+//     li.setAttribute('class', 'list-item-b flex align-center');
+//     const span = document.createElement('span');
+//     span.textContent = value.Cases.toString();
+//     span.setAttribute('class', 'recovered');
+//     const p = document.createElement('p');
+//     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
+//     li.appendChild(span);
+//     li.appendChild(p);
+//     recoveredList.appendChild(li);
+//   });
+// }
 
 function clearRecoveredList() {
   recoveredList.innerHTML = null;
 }
 
-function setTotalRecoveredByCountry(data: CountrySummeryInfo) {
-  recoveredTotal.innerText = data[0].Cases.toString();
-}
+// function setTotalRecoveredByCountry(data: CountrySummeryInfo) {
+//   recoveredTotal.innerText = data[0].Cases.toString();
+// }
 
 function startLoadingAnimation() {
   deathsList.appendChild(deathSpinner);
@@ -197,7 +197,8 @@ async function setupData() {
 }
 
 function renderChart(data: number[], labels: string[]) {
-  const ctx = $('#lineChart').getContext('2d');
+  const lineChart = $('#lineChart') as HTMLCanvasElement;
+  const ctx = lineChart.getContext('2d');
   new Chart(ctx, {
     type: 'line',
     data: {
