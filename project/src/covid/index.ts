@@ -30,7 +30,7 @@ export interface CountrySummeryResponse {
   Cases: number;
   Country: string;
   CountryCode: string;
-  Date: Date;
+  Date: string;
   Lat: string;
   Lon: string;
   Status: string;
