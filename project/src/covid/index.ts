@@ -26,11 +26,11 @@ export interface CovidSummaryResponse {
   Global: Global;
 }
 
-interface CountrySummeryResponse {
+export interface CountrySummeryResponse {
   Cases: number;
   Country: string;
   CountryCode: string;
-  Date: string;
+  Date: Date;
   Lat: string;
   Lon: string;
   Status: string;

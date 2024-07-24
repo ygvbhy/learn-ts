@@ -6,6 +6,7 @@ import {
   CovidStatus,
   CountrySummeryInfo,
   Country,
+  CountrySummeryResponse,
 } from './covid/index';
 
 // utils
@@ -79,7 +80,7 @@ function initEvents() {
   rankList.addEventListener('click', handleListClick);
 }
 
-async function handleListClick(event: any) {
+async function handleListClick(event: MouseEvent) {
   let selectedId;
   if (
     event.target instanceof HTMLParagraphElement ||
@@ -123,15 +124,16 @@ async function handleListClick(event: any) {
   isDeathLoading = false;
 }
 
-function setDeathsList(data: any) {
+function setDeathsList(data: CountrySummeryInfo) {
   const sorted = data.sort(
-    (a: any, b: any) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
+    (a: CountrySummeryResponse, b: CountrySummeryResponse) =>
+      getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date),
   );
-  sorted.forEach((value: any) => {
+  sorted.forEach((value: CountrySummeryResponse) => {
     const li = document.createElement('li');
     li.setAttribute('class', 'list-item-b flex align-center');
     const span = document.createElement('span');
-    span.textContent = value.Cases;
+    span.textContent = value.Cases.toString();
     span.setAttribute('class', 'deaths');
     const p = document.createElement('p');
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
@@ -213,11 +215,13 @@ function renderChart(data: any, labels: any) {
   });
 }
 
-function setChartData(data: any) {
-  const chartData = data.slice(-14).map((value: any) => value.Cases);
+function setChartData(data: CountrySummeryInfo) {
+  const chartData = data
+    .slice(-14)
+    .map((value: CountrySummeryResponse) => value.Cases);
   const chartLabel = data
     .slice(-14)
-    .map((value: any) =>
+    .map((value: CountrySummeryResponse) =>
       new Date(value.Date).toLocaleDateString().slice(5, -1),
     );
   renderChart(chartData, chartLabel);
