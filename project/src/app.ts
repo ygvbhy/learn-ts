@@ -45,8 +45,7 @@ function createSpinnerElement(id: string) {
 
 // state
 let isDeathLoading = false;
-const isRecoveredLoading = false;
-console.log(isRecoveredLoading);
+// const isRecoveredLoading = false;
 
 // api
 function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
@@ -197,7 +196,7 @@ async function setupData() {
   setLastUpdatedTimestamp(data);
 }
 
-function renderChart(data: any, labels: any) {
+function renderChart(data: number[], labels: string[]) {
   const ctx = $('#lineChart').getContext('2d');
   new Chart(ctx, {
     type: 'line',
