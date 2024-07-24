@@ -1,7 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import * as Chart from 'chart.js';
 // 타입 모듈
-import { CovidSummaryResponse, CovidStatus } from './covid/index';
+import {
+  CovidSummaryResponse,
+  CovidStatus,
+  CountrySummeryInfo,
+} from './covid/index';
 
 // utils
 function $(selector: string): HTMLParagraphElement {
@@ -40,6 +44,7 @@ function createSpinnerElement(id: string) {
 // state
 let isDeathLoading = false;
 const isRecoveredLoading = false;
+console.log(isRecoveredLoading);
 
 // api
 function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
@@ -51,9 +56,12 @@ function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
  * @param {'spain' | 'switzerland'} countryCode 스페인과 스위스만 지원됩니다.
  * @returns
  */
-function fetchCountryInfo(countryCode: string, status: CovidStatus) {
+function fetchCountryInfo(
+  countryCode: string,
+  status: CovidStatus,
+): Promise<AxiosResponse<CountrySummeryInfo>> {
   // status params: confirmed, recovered, deaths
-  console.log(status);
+  console.log(status); // 사용안하므로 우선 log 로 선언
 
   const url = `https://ts-covid-api.vercel.app/api/country/${countryCode}`;
   return axios.get(url);
