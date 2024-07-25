@@ -86,7 +86,7 @@ async function handleListClick(event: Event) {
     event.target instanceof HTMLParagraphElement ||
     event.target instanceof HTMLSpanElement
   ) {
-    selectedId = event.target.parentElement?.id;
+    selectedId = event.target.parentElement!.id;
   }
   if (event.target instanceof HTMLLIElement) {
     selectedId = event.target.id;
@@ -139,12 +139,12 @@ function setDeathsList(data: CountrySummeryInfo) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    deathsList?.appendChild(li);
+    deathsList!.appendChild(li);
   });
 }
 
 function clearDeathList() {
-  deathsList.innerHTML = null;
+  deathsList!.innerHTML = '';
 }
 
 function setTotalDeathsByCountry(data: CountrySummeryInfo) {
