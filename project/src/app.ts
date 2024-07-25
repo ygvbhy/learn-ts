@@ -58,7 +58,7 @@ function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
  * @returns
  */
 function fetchCountryInfo(
-  countryCode: string,
+  countryCode: string | undefined,
   status: CovidStatus,
 ): Promise<AxiosResponse<CountrySummeryInfo>> {
   // status params: confirmed, recovered, deaths
@@ -86,7 +86,7 @@ async function handleListClick(event: Event) {
     event.target instanceof HTMLParagraphElement ||
     event.target instanceof HTMLSpanElement
   ) {
-    selectedId = event.target.parentElement.id;
+    selectedId = event.target.parentElement?.id;
   }
   if (event.target instanceof HTMLLIElement) {
     selectedId = event.target.id;
@@ -139,7 +139,7 @@ function setDeathsList(data: CountrySummeryInfo) {
     p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
     li.appendChild(span);
     li.appendChild(p);
-    deathsList.appendChild(li);
+    deathsList?.appendChild(li);
   });
 }
 
